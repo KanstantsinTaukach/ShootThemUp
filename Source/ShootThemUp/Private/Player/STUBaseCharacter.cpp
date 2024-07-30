@@ -36,8 +36,8 @@ void ASTUBaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 
 	PlayerInputComponent->BindAxis("MoveForward", this, &ASTUBaseCharacter::MoveForward);
     PlayerInputComponent->BindAxis("MoveRight", this, &ASTUBaseCharacter::MoveRight);
-    PlayerInputComponent->BindAxis("LookUp", this, &ASTUBaseCharacter::LookUp);
-    PlayerInputComponent->BindAxis("TurnAround", this, &ASTUBaseCharacter::TurnAround);
+    PlayerInputComponent->BindAxis("LookUp", this, &ASTUBaseCharacter::AddControllerPitchInput);
+    PlayerInputComponent->BindAxis("TurnAround", this, &ASTUBaseCharacter::AddControllerYawInput);
 }
 
 void ASTUBaseCharacter::MoveForward(float Amount) 
@@ -48,14 +48,4 @@ void ASTUBaseCharacter::MoveForward(float Amount)
 void ASTUBaseCharacter::MoveRight(float Amount) 
 {
     AddMovementInput(GetActorRightVector(), Amount);
-}
-
-void ASTUBaseCharacter::LookUp(float Amount) 
-{
-    AddControllerPitchInput(Amount);
-}
-
-void ASTUBaseCharacter::TurnAround(float Amount) 
-{
-    AddControllerYawInput(Amount);
 }
