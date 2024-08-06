@@ -12,10 +12,10 @@ class USpringArmComponent;
 UCLASS()
 class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter
 {
-	GENERATED_BODY()
+    GENERATED_BODY()
 
 public:
-	ASTUBaseCharacter();
+    ASTUBaseCharacter(const FObjectInitializer& ObjInit);
 
 protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
@@ -24,14 +24,22 @@ protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     UCameraComponent* CameraComponent;
 
-	virtual void BeginPlay() override;
+    virtual void BeginPlay() override;
 
-public:	
-	virtual void Tick(float DeltaTime) override;
+public:
+    virtual void Tick(float DeltaTime) override;
 
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+    UFUNCTION(BlueprintCallable, Category = "Movement")
+    bool IsRunning() const;
 
 private:
+    bool WantsToRun = false;
+    bool ISMovingForward = false;
+
     void MoveForward(float Amount);
     void MoveRight(float Amount);
- };
+    void OnStartRunning();
+    void OnStopRunning();
+};
