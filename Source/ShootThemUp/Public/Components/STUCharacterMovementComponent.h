@@ -16,7 +16,7 @@ class SHOOTTHEMUP_API USTUCharacterMovementComponent : public UCharacterMovement
 	
 	public:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Movement", meta = (ClampMin = "1.5", ClampMax = "5"))
-        float RunModifier = 2.0f;
+    float RunModifier = 2.0f;
 
     virtual float GetMaxSpeed() const override;
 };
