@@ -4,16 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "STUDecDamageActor.generated.h"
+#include "STUDevDamageActor.generated.h"
 
 UCLASS()
-class SHOOTTHEMUP_API ASTUDecDamageActor : public AActor
+class SHOOTTHEMUP_API ASTUDevDamageActor : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	ASTUDecDamageActor();
+	ASTUDevDamageActor();
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
     USceneComponent* SceneComponent;
@@ -29,6 +29,9 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
     bool DoFullDamage = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+    TSubclassOf<UDamageType> DamageType;
 
 protected:
 	// Called when the game starts or when spawned
