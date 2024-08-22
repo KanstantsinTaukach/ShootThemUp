@@ -2,8 +2,9 @@
 
 
 #include "Components/STUHealthComponent.h"
-#include "Dev/STUFireDamageType.h"
-#include "Dev/STUIceDamageType.h"
+#include "GameFramework/Actor.h"
+#include "Engine/World.h"
+#include "TimerManager.h"
 
 DEFINE_LOG_CATEGORY_STATIC(HealthComponentLog, All, All);
 
@@ -16,41 +17,49 @@ void USTUHealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	Health = MaxHealth;
-    OnHealthChanged.Broadcast(Health);
+	SetHealth(MaxHealth);
 
 	AActor* ComponentOwner = GetOwner();
 	if (ComponentOwner)
 	{
         ComponentOwner->OnTakeAnyDamage.AddDynamic(this, &USTUHealthComponent::OnTakeAnyDamageHandle);
-	}
+	}    
 }
 
 
 void USTUHealthComponent::OnTakeAnyDamageHandle(
     AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
 {
-    if (Damage <= 0.0f || IsDead()) { return; }
+    if (Damage <= 0.0f || IsDead() || !GetWorld())
+    {
+        return;
+    }
 
-    Health = FMath::Clamp(Health - Damage, 0.0f, MaxHealth);
-    OnHealthChanged.Broadcast(Health);
+    SetHealth(Health - Damage);
+    GetWorld()->GetTimerManager().ClearTimer(HealTimerHandle);
 
     if (IsDead())
     {
         OnDeath.Broadcast();
     }
-
-    /*UE_LOG(HealthComponentLog, Display, TEXT("Damage: %f"), Damage);
-
-	if (DamageType)
+    else if (AutoHeal)
     {
-        if (DamageType->IsA<USTUFireDamageType>())
-        {
-            UE_LOG(HealthComponentLog, Display, TEXT("So hoooooot!!!"));
-        }
-		else if (DamageType->IsA<USTUIceDamageType>()) 
-		{
-            UE_LOG(HealthComponentLog, Display, TEXT("So cooooold!!!"));
-		}
-	}	*/
+        GetWorld()->GetTimerManager().SetTimer(HealTimerHandle, this, &USTUHealthComponent::HealUpdate, HealUpdateTime, true, HealDelay);
+    }    
+}
+
+void USTUHealthComponent::HealUpdate()
+{   
+    SetHealth(Health + HealModifier);
+       
+    if (FMath::IsNearlyEqual(Health, MaxHealth) && GetWorld())
+    {
+        GetWorld()->GetTimerManager().ClearTimer(HealTimerHandle);
+    }
+}
+
+void USTUHealthComponent::SetHealth(float NewHealth) 
+{
+    Health = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
+    OnHealthChanged.Broadcast(Health);
 }
