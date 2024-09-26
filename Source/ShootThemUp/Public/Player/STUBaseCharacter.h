@@ -10,6 +10,7 @@ class UCameraComponent;
 class USpringArmComponent;
 class USTUHealthComponent;
 class UTextRenderComponent;
+class ASTUBaseWeapon;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter
@@ -44,6 +45,9 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "Damage")
     FVector2D LandedDamage = FVector2D(10.0f, 100.f);
 
+    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+    TSubclassOf<ASTUBaseWeapon> WeaponClass;
+
     virtual void BeginPlay() override;
 
 public:
@@ -55,11 +59,11 @@ public:
     bool IsRunning() const;
 
     UFUNCTION(BlueprintCallable, Category = "Movement")
-    float GetMovementDirestion() const;
+    float GetMovementDirection() const;
 
 private:
     bool WantsToRun = false;
-    bool ISMovingForward = false;
+    bool IsMovingForward = false;
 
     void MoveForward(float Amount);
     void MoveRight(float Amount);
@@ -72,4 +76,6 @@ private:
 
     UFUNCTION()
     void OnGroundLanded(const FHitResult &Hit);
+
+    void SpawnWeapon();
 };
