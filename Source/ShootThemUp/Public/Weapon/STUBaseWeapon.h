@@ -16,6 +16,8 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
   public:
     ASTUBaseWeapon();
 
+    virtual void Fire();
+
   protected:
     UPROPERTY(VisibleAnywhere, blueprintReadWrite, Category = "Components")
     USkeletalMeshComponent *WeaponSkeletalMesh;

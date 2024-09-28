@@ -10,31 +10,34 @@ class UCameraComponent;
 class USpringArmComponent;
 class USTUHealthComponent;
 class UTextRenderComponent;
-class ASTUBaseWeapon;
+class USTUWeaponComponent;
 
 UCLASS()
 class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter
 {
     GENERATED_BODY()
 
-public:
-    ASTUBaseCharacter(const FObjectInitializer& ObjInit);
+  public:
+    ASTUBaseCharacter(const FObjectInitializer &ObjInit);
 
-protected:
+  protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    USpringArmComponent* SpringArmComponent;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    UCameraComponent* CameraComponent;
+    USpringArmComponent *SpringArmComponent;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    USTUHealthComponent* HealthComponent;
+    UCameraComponent *CameraComponent;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    UTextRenderComponent* HealthTextComponent;
+    USTUHealthComponent *HealthComponent;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    UTextRenderComponent *HealthTextComponent;
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+    USTUWeaponComponent *WeaponComponent;
 
     UPROPERTY(EditDefaultsOnly, Category = "Animation")
-    UAnimMontage* DeathAnimMontage;
+    UAnimMontage *DeathAnimMontage;
 
     UPROPERTY(EditDefaultsOnly, Category = "Damage")
     float LifeSpanOnDeath = 5.0f;
@@ -45,15 +48,12 @@ protected:
     UPROPERTY(EditDefaultsOnly, Category = "Damage")
     FVector2D LandedDamage = FVector2D(10.0f, 100.f);
 
-    UPROPERTY(EditDefaultsOnly, Category = "Weapon")
-    TSubclassOf<ASTUBaseWeapon> WeaponClass;
-
     virtual void BeginPlay() override;
 
-public:
+  public:
     virtual void Tick(float DeltaTime) override;
 
-    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+    virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 
     UFUNCTION(BlueprintCallable, Category = "Movement")
     bool IsRunning() const;
@@ -61,7 +61,7 @@ public:
     UFUNCTION(BlueprintCallable, Category = "Movement")
     float GetMovementDirection() const;
 
-private:
+  private:
     bool WantsToRun = false;
     bool IsMovingForward = false;
 
@@ -76,6 +76,4 @@ private:
 
     UFUNCTION()
     void OnGroundLanded(const FHitResult &Hit);
-
-    void SpawnWeapon();
 };
