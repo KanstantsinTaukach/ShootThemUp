@@ -2,30 +2,36 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "CoreMinimal.h"
 #include "STUHealthComponent.generated.h"
 
 DECLARE_MULTICAST_DELEGATE(FOnDeathSignature);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float);
 
-    UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent)) 
-    class SHOOTTHEMUP_API USTUHealthComponent : public UActorComponent
+UCLASS(ClassGroup = (Custom), meta = (BlueprintSpawnableComponent))
+class SHOOTTHEMUP_API USTUHealthComponent : public UActorComponent
 {
     GENERATED_BODY()
 
-public:
+  public:
     USTUHealthComponent();
 
     FOnDeathSignature OnDeath;
     FOnHealthChangedSignature OnHealthChanged;
 
     UFUNCTION(BlueprintCallable)
-    bool IsDead() const { return FMath::IsNearlyZero(Health); };
+    bool IsDead() const
+    {
+        return FMath::IsNearlyZero(Health);
+    };
 
-    float GetHealth() const { return Health; };
+    float GetHealth() const
+    {
+        return Health;
+    };
 
-protected:
+  protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health", meta = (ClampMin = "0", ClampMax = "300"))
     float MaxHealth = 100.0f;
 
@@ -43,13 +49,13 @@ protected:
 
     virtual void BeginPlay() override;
 
-private:
+  private:
     float Health = 0.0f;
     FTimerHandle HealTimerHandle;
 
     UFUNCTION()
-    void OnTakeAnyDamageHandle(
-        AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
+    void OnTakeAnyDamageHandle(AActor *DamagedActor, float Damage, const class UDamageType *DamageType,
+                               class AController *InstigatedBy, AActor *DamageCauser);
 
     void HealUpdate();
     void SetHealth(float NewHealth);

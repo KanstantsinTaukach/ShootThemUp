@@ -1,8 +1,8 @@
 // Shoot them Up Game. All Rights Reserved.
 
 #include "Components/STUHealthComponent.h"
-#include "GameFramework/Actor.h"
 #include "Engine/World.h"
+#include "GameFramework/Actor.h"
 #include "TimerManager.h"
 
 DEFINE_LOG_CATEGORY_STATIC(HealthComponentLog, All, All);
@@ -18,15 +18,15 @@ void USTUHealthComponent::BeginPlay()
 
     SetHealth(MaxHealth);
 
-    AActor* ComponentOwner = GetOwner();
+    AActor *ComponentOwner = GetOwner();
     if (ComponentOwner)
     {
         ComponentOwner->OnTakeAnyDamage.AddDynamic(this, &USTUHealthComponent::OnTakeAnyDamageHandle);
     }
 }
 
-void USTUHealthComponent::OnTakeAnyDamageHandle(
-    AActor* DamagedActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
+void USTUHealthComponent::OnTakeAnyDamageHandle(AActor *DamagedActor, float Damage, const UDamageType *DamageType,
+                                                AController *InstigatedBy, AActor *DamageCauser)
 {
     if (Damage <= 0.0f || IsDead() || !GetWorld())
     {
@@ -42,7 +42,8 @@ void USTUHealthComponent::OnTakeAnyDamageHandle(
     }
     else if (AutoHeal)
     {
-        GetWorld()->GetTimerManager().SetTimer(HealTimerHandle, this, &USTUHealthComponent::HealUpdate, HealUpdateTime, true, HealDelay);
+        GetWorld()->GetTimerManager().SetTimer(HealTimerHandle, this, &USTUHealthComponent::HealUpdate, HealUpdateTime,
+                                               true, HealDelay);
     }
 }
 

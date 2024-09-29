@@ -43,12 +43,13 @@ void ASTUBaseWeapon::MakeShot()
     }
    
     FHitResult HitResult;
-    MakeHit(HitResult, TraceStart, TraceEnd);
+    CheckHit(HitResult, TraceStart, TraceEnd);
 
     if (HitResult.bBlockingHit)
     {
+        MakeDamage(HitResult);
         DrawDebugLine(GetWorld(), GetMuzzleWorldLocation(), HitResult.ImpactPoint, FColor::Red, false, 3.0f, 0, 3.0f);
-        DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 24, FColor::Red, false, 5.0f);
+        DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 24, FColor::Red, false, 5.0f);     
     }
     else
     {
@@ -99,7 +100,7 @@ bool ASTUBaseWeapon::GetTraceData(FVector &TraceStart, FVector &TraceEnd) const
     return true;
 }
 
-void ASTUBaseWeapon::MakeHit(FHitResult &HitResult, const FVector &TraceStart, const FVector &TraceEnd)
+void ASTUBaseWeapon::CheckHit(FHitResult &HitResult, const FVector &TraceStart, const FVector &TraceEnd) const
 {
     if (!GetWorld())
     {
@@ -110,4 +111,14 @@ void ASTUBaseWeapon::MakeHit(FHitResult &HitResult, const FVector &TraceStart, c
 
     GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility,
                                          CollisionParams);
+}
+
+void ASTUBaseWeapon::MakeDamage(const FHitResult& HitResult)
+{
+    const auto DamagedActor = HitResult.GetActor();
+    if (!DamagedActor)
+    {
+        return;
+    }
+    DamagedActor->TakeDamage(DamageAmount, FDamageEvent(), GetPlayerController(), this);
 }
