@@ -19,8 +19,16 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
     virtual void Fire();
 
   protected:
-    UPROPERTY(VisibleAnywhere, blueprintReadWrite, Category = "Components")
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USkeletalMeshComponent *WeaponSkeletalMesh;
 
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+    FName MuzzleSocketName = "MuzzleFlashSocket";
+
+    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+    float TraceMaxDistance = 1500.0f;
+
     virtual void BeginPlay() override;
+
+    void MakeShot();
 };
