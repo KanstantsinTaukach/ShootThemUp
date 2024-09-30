@@ -23,14 +23,11 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USkeletalMeshComponent *WeaponSkeletalMesh;
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     FName MuzzleSocketName = "MuzzleFlashSocket";
 
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float TraceMaxDistance = 1500.0f;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-    float DamageAmount = 10.0f;
 
     virtual void BeginPlay() override;
 
@@ -39,8 +36,10 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
     virtual bool GetTraceData(FVector &TraceStart, FVector &TraceEnd) const;
 
     APlayerController *GetPlayerController() const;
+
     bool GetPlayerViewPoint(FVector &ViewLocation, FRotator &ViewRotation) const;
+
     FVector GetMuzzleWorldLocation() const;
+
     void CheckHit(FHitResult &HitResult, const FVector &TraceStart, const FVector &TraceEnd) const;
-    void MakeDamage(const FHitResult &HitResult);
 };
