@@ -30,6 +30,9 @@ class SHOOTTHEMUP_API USTUWeaponComponent : public UActorComponent
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")
     FName WeaponArmorySocketName = "ArmorySocket";
 
+    UPROPERTY(EditDefaultsOnly, Category = "Animation")
+    UAnimMontage *EquipAnimMontage;
+
     virtual void BeginPlay() override;
     virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
@@ -47,4 +50,9 @@ class SHOOTTHEMUP_API USTUWeaponComponent : public UActorComponent
     void AttachWeaponToSocket(ASTUBaseWeapon *Weapon, USceneComponent *SceneComponent, const FName &SocketName);
 
     void EquipWeapon(int32 WeaponIndex);
+
+    void PlayAnimMontage(UAnimMontage* Animation);
+
+    void InitAnimations();
+    void OnEquipFinished(USkeletalMeshComponent* MeshComponent);
 };
