@@ -45,6 +45,8 @@ class SHOOTTHEMUP_API USTUWeaponComponent : public UActorComponent
 
     int32 CurrentWeaponIndex = 0;
 
+    bool EquipAnimInProgress = false;
+
     void SpawnWeapons();
 
     void AttachWeaponToSocket(ASTUBaseWeapon *Weapon, USceneComponent *SceneComponent, const FName &SocketName);
@@ -54,5 +56,9 @@ class SHOOTTHEMUP_API USTUWeaponComponent : public UActorComponent
     void PlayAnimMontage(UAnimMontage* Animation);
 
     void InitAnimations();
+
     void OnEquipFinished(USkeletalMeshComponent* MeshComponent);
+
+    bool CanFire() const;
+    bool CanEquip() const;
 };

@@ -1,9 +1,9 @@
 // Shoot them Up Game. All Rights Reserved.
 
 #include "Components/STUWeaponComponent.h"
+#include "Animations/STUEquipFinishedAnimNotify.h"
 #include "GameFramework/Character.h"
 #include "Weapon/STUBaseWeapon.h"
-#include "Animations/STUEquipFinishedAnimNotify.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogWeaponComponent, All, All);
 
@@ -36,7 +36,7 @@ void USTUWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 }
 
 void USTUWeaponComponent::SpawnWeapons()
-{   
+{
     ACharacter *Character = Cast<ACharacter>(GetOwner());
     if (!Character || !GetWorld())
     {
@@ -57,7 +57,8 @@ void USTUWeaponComponent::SpawnWeapons()
     }
 }
 
-void USTUWeaponComponent::AttachWeaponToSocket(ASTUBaseWeapon* Weapon, USceneComponent* SceneComponent, const FName& SocketName)
+void USTUWeaponComponent::AttachWeaponToSocket(ASTUBaseWeapon *Weapon, USceneComponent *SceneComponent,
+                                               const FName &SocketName)
 {
     if (!Weapon || !SceneComponent)
     {
@@ -81,12 +82,13 @@ void USTUWeaponComponent::EquipWeapon(int32 WeaponIndex)
     }
     CurrentWeapon = Weapons[WeaponIndex];
     AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponEquipSocketName);
+    EquipAnimInProgress = true;
     PlayAnimMontage(EquipAnimMontage);
 }
 
 void USTUWeaponComponent::StartFire()
 {
-    if (!CurrentWeapon)
+    if (!CanFire())
     {
         return;
     }
@@ -104,6 +106,10 @@ void USTUWeaponComponent::StopFire()
 
 void USTUWeaponComponent::NextWeapon()
 {
+    if (!CanEquip())
+    {
+        return;
+    }
     CurrentWeaponIndex = (CurrentWeaponIndex + 1) % Weapons.Num();
     EquipWeapon(CurrentWeaponIndex);
 }
@@ -134,17 +140,25 @@ void USTUWeaponComponent::InitAnimations()
             EquipFinishedNotify->OnNotified.AddUObject(this, &USTUWeaponComponent::OnEquipFinished);
             break;
         }
-    }    
+    }
 }
+
 void USTUWeaponComponent::OnEquipFinished(USkeletalMeshComponent *MeshComponent)
 {
     ACharacter *Character = Cast<ACharacter>(GetOwner());
-    if (!Character)
+    if (!Character || MeshComponent != Character->GetMesh())
     {
         return;
     }
-    if (Character->GetMesh() == MeshComponent)
-    {
-        UE_LOG(LogWeaponComponent, Display, TEXT("Equip finished"));
-    }
+    EquipAnimInProgress = false;
+}
+
+bool USTUWeaponComponent::CanFire() const
+{
+    return CurrentWeapon && !EquipAnimInProgress;
+}
+
+bool USTUWeaponComponent::CanEquip() const
+{
+    return !EquipAnimInProgress;
 }
