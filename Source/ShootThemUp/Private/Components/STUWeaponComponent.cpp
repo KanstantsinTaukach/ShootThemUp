@@ -1,9 +1,9 @@
 // Shoot them Up Game. All Rights Reserved.
 
 #include "Components/STUWeaponComponent.h"
+#include "Animations/AnimUtils.h"
 #include "Animations/STUEquipFinishedAnimNotify.h"
 #include "Animations/STUReloadFinishedAnimNotify.h"
-#include "Animations/AnimUtils.h"
 #include "GameFramework/Character.h"
 #include "Weapon/STUBaseWeapon.h"
 
@@ -230,4 +230,14 @@ void USTUWeaponComponent::ChangeClip()
     CurrentWeapon->ChangeClip();
     ReloadAnimInProgress = true;
     PlayAnimMontage(CurrentReloadAnimMontage);
+}
+
+bool USTUWeaponComponent::GetWeaponUIData(FWeaponUIData &UIData) const
+{
+    if (CurrentWeapon)
+    {
+        UIData = CurrentWeapon->GetUIData();
+        return true;
+    }
+    return false;
 }
