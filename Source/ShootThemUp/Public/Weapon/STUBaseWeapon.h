@@ -30,6 +30,11 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
         return UIData;
     }
 
+    FAmmoData GetAmmoData() const
+    {
+        return CurrentAmmo;
+    }
+
   protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USkeletalMeshComponent *WeaponSkeletalMesh;
@@ -63,7 +68,7 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
     void DecreaseAmmo();
     bool IsAmmoEmpty() const;
     bool IsClipEmpty() const;
-    void LogAmmo();
+    void LogAmmo();   
 
   private:
     FAmmoData CurrentAmmo;

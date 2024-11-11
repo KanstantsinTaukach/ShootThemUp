@@ -148,3 +148,19 @@ void ASTUBaseWeapon::LogAmmo()
     AmmoInfo += CurrentAmmo.Infinite ? "Infinite" : FString::FromInt(CurrentAmmo.Clips);
     UE_LOG(LogBaseWeapon, Display, TEXT("%s"), *AmmoInfo);
 }
+
+//FString ASTUBaseWeapon::GetAmmoData() const
+//{
+//    FString AmmoInfo{};
+//    if (CurrentAmmo.Bullets > 9)
+//    {
+//        AmmoInfo = FString::FromInt(CurrentAmmo.Bullets) + " / ";
+//    }
+//    else
+//    {
+//        AmmoInfo = "  " + FString::FromInt(CurrentAmmo.Bullets) + " / ";
+//    }
+//    
+//    AmmoInfo += CurrentAmmo.Infinite ? TEXT("\u221E") : FString::FromInt(CurrentAmmo.Clips);
+//    return AmmoInfo;
+//}
