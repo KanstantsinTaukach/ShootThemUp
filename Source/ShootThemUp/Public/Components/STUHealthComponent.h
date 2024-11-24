@@ -35,6 +35,8 @@ class SHOOTTHEMUP_API USTUHealthComponent : public UActorComponent
         return Health;
     };
 
+    bool TryToAddHealth(float HealthAmount);
+
   protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Health", meta = (ClampMin = "0", ClampMax = "300"))
     float MaxHealth = 100.0f;
@@ -63,4 +65,5 @@ class SHOOTTHEMUP_API USTUHealthComponent : public UActorComponent
 
     void HealUpdate();
     void SetHealth(float NewHealth);
+    bool IsHealthFull() const;
 };
