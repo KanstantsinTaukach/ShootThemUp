@@ -25,8 +25,12 @@ class SHOOTTHEMUP_API ASTUBasePickup : public AActor
     UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Pickup")
     float RespawnTime = 5.0f;
 
+    UPROPERTY()
+    TArray<APawn*> OverlappingPawns;
+
     virtual void BeginPlay() override;
     virtual void NotifyActorBeginOverlap(AActor *OtherActor) override;
+    virtual void NotifyActorEndOverlap(AActor *OtherActor) override;
 
 private:
     virtual bool GivePickupTo(APawn *PlayerPawn);

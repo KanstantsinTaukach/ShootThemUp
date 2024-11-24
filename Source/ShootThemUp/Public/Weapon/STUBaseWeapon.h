@@ -35,6 +35,8 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
         return CurrentAmmo;
     }
 
+    bool TryToAddAmmo(int32 ClipsAmount);
+
   protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USkeletalMeshComponent *WeaponSkeletalMesh;
@@ -67,8 +69,11 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
 
     void DecreaseAmmo();
     bool IsAmmoEmpty() const;
+    bool IsAmmoFull() const;
     bool IsClipEmpty() const;
     void LogAmmo();   
+
+
 
   private:
     FAmmoData CurrentAmmo;
