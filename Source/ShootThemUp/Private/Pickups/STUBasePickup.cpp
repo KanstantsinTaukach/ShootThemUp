@@ -29,7 +29,7 @@ void ASTUBasePickup::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 
-    AddActorLocalRotation(FRotator(0.0f, RotationYaw, 0.0f));
+    AddActorLocalRotation(FRotator(0.0f, RotationYaw * DeltaTime, 0.0f));
 
     for (const auto OverlapPawn : OverlappingPawns)
     {
@@ -97,5 +97,5 @@ void ASTUBasePickup::Respawn()
 void ASTUBasePickup::GenerateRotationYaw()
 {
     const auto Direction = FMath::RandBool() ? 1.0f : -1.0f;
-    RotationYaw = FMath::RandRange(1.0f, 2.0f) * Direction;
+    RotationYaw = FMath::RandRange(25.0f, 50.0f) * Direction;
 }
