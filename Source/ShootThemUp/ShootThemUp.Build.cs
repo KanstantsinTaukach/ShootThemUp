@@ -13,8 +13,9 @@ public class ShootThemUp : ModuleRules
 			"Core", 
 			"CoreUObject", 
 			"Engine", 
-			"InputCore" ,
-			"Niagara"
+			"InputCore",
+			"Niagara",
+			"PhysicsCore"
 		});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
