@@ -3,8 +3,7 @@
 class AnimUtils
 {
   public:
-    template <typename T> 
-    static T *FindNotifyByClass(UAnimSequenceBase *Animation)
+    template <typename T> static T *FindNotifyByClass(UAnimSequenceBase *Animation)
     {
         if (!Animation)
         {
