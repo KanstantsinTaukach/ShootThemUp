@@ -20,7 +20,13 @@ class SHOOTTHEMUP_API ASTUAIController : public AAIController
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USTUAIPerceptionComponent *STUAIPerceptionComponent;
 
+    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "AI")
+    FName FocusOnKeyName = "EnemyActor";
+
     virtual void Tick(float DeltaTime) override;
 
     virtual void OnPossess(APawn *InPawn) override;
+
+  private:
+    AActor *GetFocusOnActor() const;
 };
