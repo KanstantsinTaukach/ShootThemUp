@@ -39,6 +39,8 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
 
     bool TryToAddAmmo(int32 ClipsAmount);
 
+    bool IsAmmoEmpty() const;
+
   protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
     USkeletalMeshComponent *WeaponSkeletalMesh;
@@ -73,10 +75,10 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
     void CheckHit(FHitResult &HitResult, const FVector &TraceStart, const FVector &TraceEnd) const;
 
     void DecreaseAmmo();
-    bool IsAmmoEmpty() const;
     bool IsAmmoFull() const;
     bool IsClipEmpty() const;
-    void LogAmmo();   
+
+    void LogAmmo();
 
     UNiagaraComponent *SpawnMuzzleFX();
 
