@@ -50,6 +50,8 @@ class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter
 
     virtual void BeginPlay() override;
 
+    virtual void OnDeath();
+
   public:
     virtual void Tick(float DeltaTime) override;
 
@@ -71,7 +73,6 @@ class SHOOTTHEMUP_API ASTUBaseCharacter : public ACharacter
     void OnStartRunning();
     void OnStopRunning();
 
-    void OnDeath();
     void OnHealthChanged(float Health, float HealthDelta);
 
     UFUNCTION()
