@@ -18,6 +18,8 @@ class SHOOTTHEMUP_API ASTUBasePickup : public AActor
 
     virtual void Tick(float DeltaTime) override;
 
+    bool CouldBeTaken() const;
+
   protected:
     UPROPERTY(VisibleAnywhere, Category = "Pickup")
     USphereComponent *CollisionComponent;
@@ -34,6 +36,8 @@ class SHOOTTHEMUP_API ASTUBasePickup : public AActor
 
 private:
     float RotationYaw = 0.0f;
+
+    FTimerHandle RespawnTimerHandle;
 
     virtual bool GivePickupTo(APawn *PlayerPawn);
 
