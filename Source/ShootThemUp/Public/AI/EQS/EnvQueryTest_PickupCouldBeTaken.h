@@ -14,5 +14,5 @@ class SHOOTTHEMUP_API UEnvQueryTest_PickupCouldBeTaken : public UEnvQueryTest
   public:
     UEnvQueryTest_PickupCouldBeTaken(const FObjectInitializer& ObjectInitializer);
 
-    virtual void RunTest(FEnvQueryInstance &QueryInstznce) const override;
+    virtual void RunTest(FEnvQueryInstance &QueryInstance) const override;
 };
