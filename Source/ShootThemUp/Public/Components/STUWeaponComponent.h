@@ -26,6 +26,7 @@ class SHOOTTHEMUP_API USTUWeaponComponent : public UActorComponent
     bool GetCurrentWeaponAmmoData(FAmmoData &AmmoData) const;
 
     bool TryToAddAmmo(TSubclassOf<ASTUBaseWeapon> WeaponType, int32 ClipsAmount);
+    bool NeedAmmo(TSubclassOf<ASTUBaseWeapon> WeaponType);
 
   protected:
     UPROPERTY(EditDefaultsOnly, Category = "Weapon")

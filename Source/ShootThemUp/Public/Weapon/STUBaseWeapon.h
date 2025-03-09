@@ -40,6 +40,7 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
     bool TryToAddAmmo(int32 ClipsAmount);
 
     bool IsAmmoEmpty() const;
+    bool IsAmmoFull() const;
 
   protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
@@ -75,7 +76,6 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
     void CheckHit(FHitResult &HitResult, const FVector &TraceStart, const FVector &TraceEnd) const;
 
     void DecreaseAmmo();
-    bool IsAmmoFull() const;
     bool IsClipEmpty() const;
 
     void LogAmmo();
