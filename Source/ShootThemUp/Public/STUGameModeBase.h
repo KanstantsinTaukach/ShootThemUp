@@ -39,6 +39,8 @@ class SHOOTTHEMUP_API ASTUGameModeBase : public AGameModeBase
     void SpawnBots();
 
     void StartRound();
-
     void GameTimerUpdate();
+
+    void ResetPlayers();
+    void ResetOnePlayer(AController* Controller);
 };
