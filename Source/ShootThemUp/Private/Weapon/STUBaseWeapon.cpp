@@ -29,44 +29,21 @@ void ASTUBaseWeapon::BeginPlay()
     CurrentAmmo = DefaultAmmo;
 }
 
-void ASTUBaseWeapon::StartFire()
-{
-}
+void ASTUBaseWeapon::StartFire() {}
 
-void ASTUBaseWeapon::StopFire()
-{
-}
+void ASTUBaseWeapon::StopFire() {}
 
-void ASTUBaseWeapon::MakeShot()
-{
-}
-
-APlayerController *ASTUBaseWeapon::GetPlayerController() const
-{
-    const auto Player = Cast<ACharacter>(GetOwner());
-    if (!Player)
-    {
-        return nullptr;
-    }
-
-    return Player->GetController<APlayerController>();
-}
+void ASTUBaseWeapon::MakeShot() {}
 
 bool ASTUBaseWeapon::GetPlayerViewPoint(FVector &ViewLocation, FRotator &ViewRotation) const
 {
     const auto STUCharacter = Cast<ACharacter>(GetOwner());
-    if (!STUCharacter)
-    {
-        return false;
-    }
+    if (!STUCharacter) return false;
 
     if (STUCharacter->IsPlayerControlled())
     {
-        const auto Controller = GetPlayerController();
-        if (!Controller)
-        {
-            return false;
-        }
+        const auto Controller = STUCharacter->GetController<APlayerController>();
+        if (!Controller) return false;
 
         Controller->GetPlayerViewPoint(ViewLocation, ViewRotation);
     }
@@ -88,10 +65,7 @@ bool ASTUBaseWeapon::GetTraceData(FVector &TraceStart, FVector &TraceEnd) const
 {
     FVector ViewLocation;
     FRotator ViewRotation;
-    if (!GetPlayerViewPoint(ViewLocation, ViewRotation))
-    {
-        return false;
-    }
+    if (!GetPlayerViewPoint(ViewLocation, ViewRotation)) return false;
 
     TraceStart = ViewLocation;
     const FVector ShootDirection = ViewRotation.Vector();
@@ -101,10 +75,8 @@ bool ASTUBaseWeapon::GetTraceData(FVector &TraceStart, FVector &TraceEnd) const
 
 void ASTUBaseWeapon::CheckHit(FHitResult &HitResult, const FVector &TraceStart, const FVector &TraceEnd) const
 {
-    if (!GetWorld())
-    {
-        return;
-    }
+    if (!GetWorld()) return;
+
     FCollisionQueryParams CollisionParams;
     CollisionParams.AddIgnoredActor(GetOwner());
     CollisionParams.bReturnPhysicalMaterial = true;
@@ -173,10 +145,8 @@ void ASTUBaseWeapon::LogAmmo()
 
 bool ASTUBaseWeapon::TryToAddAmmo(int32 ClipsAmount)
 {
-    if (CurrentAmmo.Infinite || IsAmmoFull() || ClipsAmount <= 0)
-    {
-        return false;
-    }
+    if (CurrentAmmo.Infinite || IsAmmoFull() || ClipsAmount <= 0) return false;
+
     if (IsAmmoEmpty())
     {
         UE_LOG(LogBaseWeapon, Display, TEXT("Ammo was empty!"));

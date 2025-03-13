@@ -73,4 +73,6 @@ class SHOOTTHEMUP_API USTUHealthComponent : public UActorComponent
     bool IsHealthFull() const;
 
     void PlayCameraShake();
+
+    void Killed(AController* KillerController);
 };
