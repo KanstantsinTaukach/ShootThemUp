@@ -5,7 +5,6 @@
 #include "Components/STUWeaponComponent.h"
 #include "STUUtils.h"
 
-
 bool USTUPlayerHUDWidget::Initialize()
 {
     const auto HealthComponent = STUUtils::GetSTUPlayerComponent<USTUHealthComponent>(GetOwningPlayerPawn());
