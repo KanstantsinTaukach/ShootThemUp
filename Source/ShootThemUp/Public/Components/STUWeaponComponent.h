@@ -64,6 +64,8 @@ class SHOOTTHEMUP_API USTUWeaponComponent : public UActorComponent
     bool EquipAnimInProgress = false;
     bool ReloadAnimInProgress = false;
 
+    bool IsFiring = false;
+
     void SpawnWeapons();
 
     void AttachWeaponToSocket(ASTUBaseWeapon *Weapon, USceneComponent *SceneComponent, const FName &SocketName);

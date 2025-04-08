@@ -44,18 +44,13 @@ void USTUWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 void USTUWeaponComponent::SpawnWeapons()
 {
     ACharacter *Character = Cast<ACharacter>(GetOwner());
-    if (!Character || !GetWorld())
-    {
-        return;
-    }
+    if (!Character || !GetWorld()) return;
 
     for (auto OneWeaponData : WeaponData)
     {
         auto Weapon = GetWorld()->SpawnActor<ASTUBaseWeapon>(OneWeaponData.WeaponClass);
-        if (!Weapon)
-        {
-            continue;
-        }
+        if (!Weapon) continue;
+
         Weapon->OnClipEmpty.AddUObject(this, &USTUWeaponComponent::OnEmptyClip);
         Weapon->SetOwner(Character);
         Weapons.Add(Weapon);
@@ -68,10 +63,8 @@ void USTUWeaponComponent::AttachWeaponToSocket(ASTUBaseWeapon *Weapon,          
                                                USceneComponent *SceneComponent, //
                                                const FName &SocketName)         //
 {
-    if (!Weapon || !SceneComponent)
-    {
-        return;
-    }
+    if (!Weapon || !SceneComponent) return;
+
     FAttachmentTransformRules AttachmentRules(EAttachmentRule::SnapToTarget, false);
     Weapon->AttachToComponent(SceneComponent, AttachmentRules, SocketName);
 }
@@ -85,10 +78,7 @@ void USTUWeaponComponent::EquipWeapon(int32 WeaponIndex)
     }
 
     ACharacter *Character = Cast<ACharacter>(GetOwner());
-    if (!Character)
-    {
-        return;
-    }
+    if (!Character) return;
 
     if (CurrentWeapon)
     {
@@ -111,28 +101,24 @@ void USTUWeaponComponent::EquipWeapon(int32 WeaponIndex)
 
 void USTUWeaponComponent::StartFire()
 {
-    if (!CanFire())
-    {
-        return;
-    }
+    if (!CanFire()) return;
+
     CurrentWeapon->StartFire();
+    IsFiring = true;
 }
 
 void USTUWeaponComponent::StopFire()
 {
-    if (!CurrentWeapon)
-    {
-        return;
-    }
+    if (!CurrentWeapon) return;
+
     CurrentWeapon->StopFire();
+    IsFiring = false;
 }
 
 void USTUWeaponComponent::NextWeapon()
 {
-    if (!CanEquip())
-    {
-        return;
-    }
+    if (!CanEquip()) return;
+
     CurrentWeaponIndex = (CurrentWeaponIndex + 1) % Weapons.Num();
     EquipWeapon(CurrentWeaponIndex);
 }
@@ -140,10 +126,7 @@ void USTUWeaponComponent::NextWeapon()
 void USTUWeaponComponent::PlayAnimMontage(UAnimMontage *Animation)
 {
     ACharacter *Character = Cast<ACharacter>(GetOwner());
-    if (!Character)
-    {
-        return;
-    }
+    if (!Character) return;
 
     Character->PlayAnimMontage(Animation);
 }
@@ -177,21 +160,21 @@ void USTUWeaponComponent::InitAnimations()
 void USTUWeaponComponent::OnEquipFinished(USkeletalMeshComponent *MeshComponent)
 {
     ACharacter *Character = Cast<ACharacter>(GetOwner());
-    if (!Character || MeshComponent != Character->GetMesh())
-    {
-        return;
-    }
+    if (!Character || MeshComponent != Character->GetMesh()) return;
+
     EquipAnimInProgress = false;
 }
 
 void USTUWeaponComponent::OnReloadFinished(USkeletalMeshComponent *MeshComponent)
 {
     ACharacter *Character = Cast<ACharacter>(GetOwner());
-    if (!Character || MeshComponent != Character->GetMesh())
-    {
-        return;
-    }
+    if (!Character || MeshComponent != Character->GetMesh()) return;
+
     ReloadAnimInProgress = false;
+    if (IsFiring)
+    {
+        StartFire();
+    }
 }
 
 bool USTUWeaponComponent::CanFire() const
@@ -216,10 +199,7 @@ void USTUWeaponComponent::Reload()
 
 void USTUWeaponComponent::OnEmptyClip(ASTUBaseWeapon *AmmoEmptyWeapon)
 {
-    if (!AmmoEmptyWeapon)
-    {
-        return;
-    }
+    if (!AmmoEmptyWeapon) return;
 
     if (CurrentWeapon == AmmoEmptyWeapon)
     {
@@ -239,10 +219,7 @@ void USTUWeaponComponent::OnEmptyClip(ASTUBaseWeapon *AmmoEmptyWeapon)
 
 void USTUWeaponComponent::ChangeClip()
 {
-    if (!CanReload())
-    {
-        return;
-    }
+    if (!CanReload()) return;
 
     CurrentWeapon->StopFire();
     CurrentWeapon->ChangeClip();
