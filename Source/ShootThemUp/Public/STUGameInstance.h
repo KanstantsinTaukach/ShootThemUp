@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Engine/GameInstance.h"
+#include "STUCoreTypes.h"
 #include "STUGameInstance.generated.h"
 
 UCLASS()
@@ -12,14 +13,20 @@ class SHOOTTHEMUP_API USTUGameInstance : public UGameInstance
     GENERATED_BODY()
 
   public:
-    FName GetStatrupLevelName() const { return StartupLevelName;};
+    FLevelData GetStatrupLevel() const { return StartupLevel; };
+    void SetStatrupLevel(const FLevelData& Data) {StartupLevel = Data; };
 
-    FName GetMenuLevelName() const { return MenuLevelName;};
+    TArray<FLevelData> GetLevelsData() const{ return LevelsData; };
+
+    FName GetMenuLevelName() const { return MenuLevelName; };
 
   protected:
     UPROPERTY(EditDefaultsOnly, Category = "Game")
-    FName StartupLevelName = NAME_None;
-
-    UPROPERTY(EditDefaultsOnly, Category = "Game")
     FName MenuLevelName = NAME_None;
+
+    UPROPERTY(EditDefaultsOnly, Category = "Game", meta = (ToolTip = "Level names must be unique!"))
+    TArray<FLevelData> LevelsData;
+
+  private:
+    FLevelData StartupLevel;
 };
