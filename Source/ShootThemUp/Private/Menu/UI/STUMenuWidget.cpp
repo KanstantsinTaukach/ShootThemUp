@@ -78,6 +78,13 @@ void USTUMenuWidget::OnLevelSelected(const FLevelData &Data)
 
 void USTUMenuWidget::OnStartGame()
 {
+    PlayAnimation(HideAnimation);
+}
+
+void USTUMenuWidget::OnAnimationFinished_Implementation(const UWidgetAnimation *Animation)
+{
+    if (Animation != HideAnimation) return;
+
     const auto STUGameInstance = GetSTUGameInstance();
     if (!STUGameInstance) return;
 
