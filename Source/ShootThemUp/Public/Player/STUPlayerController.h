@@ -22,7 +22,7 @@ class SHOOTTHEMUP_API ASTUPlayerController : public APlayerController
     USTURespawnComponent *RespawnComponent;
 
     virtual void BeginPlay() override;
-
+    virtual void OnPossess(APawn *InPawn) override;
     virtual void SetupInputComponent() override;
 
   private:

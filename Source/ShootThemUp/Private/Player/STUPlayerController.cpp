@@ -24,6 +24,13 @@ void ASTUPlayerController::BeginPlay()
     }
 }
 
+void ASTUPlayerController::OnPossess(APawn *InPawn)
+{
+    Super::OnPossess(InPawn);
+
+    OnNewPawn.Broadcast(InPawn);
+}
+
 void ASTUPlayerController::SetupInputComponent()
 {
     Super::SetupInputComponent();
@@ -36,7 +43,9 @@ void ASTUPlayerController::SetupInputComponent()
 
 void ASTUPlayerController::OnPauseGame()
 {
-    SetPause(!IsPaused());
+    if (!GetWorld() || !GetWorld()->GetAuthGameMode()) return;
+
+    GetWorld()->GetAuthGameMode()->SetPause(this);
 }
 
 void ASTUPlayerController::OnMatchStateChanged(ESTUMatchState State)
