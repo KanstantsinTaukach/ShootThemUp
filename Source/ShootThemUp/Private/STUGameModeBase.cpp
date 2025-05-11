@@ -52,7 +52,7 @@ void ASTUGameModeBase::SpawnBots()
     for (int32 i = 0; i < GameData.PlayersNum - 1; ++i)
     {
         FActorSpawnParameters SpawnInfo;
-        SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+        SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
         const auto STUAIController = GetWorld()->SpawnActor<AAIController>(AIControllerClass, SpawnInfo);
         RestartPlayer(STUAIController);
@@ -68,8 +68,6 @@ void ASTUGameModeBase::StartRound()
 
 void ASTUGameModeBase::GameTimerUpdate()
 {
-    UE_LOG(LogSTUGameModeBase, Display, TEXT("Time: %i / Round: %i/%i"), RoundCountDown, CurrentRound, GameData.RoundsNum);
-
     if (--RoundCountDown == 0)
     {
         GetWorldTimerManager().ClearTimer(GameRoundTimerHandle);
