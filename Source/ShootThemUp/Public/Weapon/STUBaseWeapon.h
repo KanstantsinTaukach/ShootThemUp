@@ -28,20 +28,15 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
     void ChangeClip();
     bool CanReload() const;
 
-    FWeaponUIData GetUIData() const
-    {
-        return UIData;
-    }
-
-    FAmmoData GetAmmoData() const
-    {
-        return CurrentAmmo;
-    }
+    FWeaponUIData GetUIData() const { return UIData; }
+    FAmmoData GetAmmoData() const { return CurrentAmmo; }
 
     bool TryToAddAmmo(int32 ClipsAmount);
 
     bool IsAmmoEmpty() const;
     bool IsAmmoFull() const;
+
+    virtual void Zoom(bool Enabled){};
 
   protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")

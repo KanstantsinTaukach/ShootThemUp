@@ -22,6 +22,8 @@ class SHOOTTHEMUP_API ASTURifleWeapon : public ASTUBaseWeapon
     virtual void StartFire() override;
     virtual void StopFire() override;
 
+    virtual void Zoom(bool Enabled) override;
+
   protected:
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float TimeBetweenShots = 0.05f;
@@ -41,11 +43,16 @@ class SHOOTTHEMUP_API ASTURifleWeapon : public ASTUBaseWeapon
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     FString TraceTargetName = "TraceTarget";
 
+    UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
+    float FOVZoomAngle = 50.0f;
+
     virtual void BeginPlay() override;
     virtual void MakeShot() override;
     virtual bool GetTraceData(FVector &TraceStart, FVector &TraceEnd) const override;
 
   private:
+    float DefaultCameraFOV = 90.0f;
+
     FTimerHandle ShotTimerHandle;
 
     UPROPERTY()

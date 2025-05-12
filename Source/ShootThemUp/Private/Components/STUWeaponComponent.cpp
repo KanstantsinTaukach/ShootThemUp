@@ -82,6 +82,7 @@ void USTUWeaponComponent::EquipWeapon(int32 WeaponIndex)
 
     if (CurrentWeapon)
     {
+        CurrentWeapon->Zoom(false);
         CurrentWeapon->StopFire();
         AttachWeaponToSocket(CurrentWeapon, Character->GetMesh(), WeaponArmorySocketName);
     }
@@ -89,8 +90,7 @@ void USTUWeaponComponent::EquipWeapon(int32 WeaponIndex)
     CurrentWeapon = Weapons[WeaponIndex];
     // CurrentReloadAnimMontage = WeaponData[WeaponIndex].ReloadAnimMontage;
 
-    const auto CurrentWeaponData = WeaponData.FindByPredicate(
-        [&](const FWeaponData &Data) { return Data.WeaponClass == CurrentWeapon->GetClass(); });
+    const auto CurrentWeaponData = WeaponData.FindByPredicate([&](const FWeaponData &Data) { return Data.WeaponClass == CurrentWeapon->GetClass(); });
 
     CurrentReloadAnimMontage = CurrentWeaponData ? CurrentWeaponData->ReloadAnimMontage : nullptr;
 
@@ -269,4 +269,12 @@ bool USTUWeaponComponent::NeedAmmo(TSubclassOf<ASTUBaseWeapon> WeaponType)
         }
     }
     return false;
+}
+
+void USTUWeaponComponent::Zoom(bool Enabled)
+{
+    if (CurrentWeapon)
+    {
+        CurrentWeapon->Zoom(Enabled);
+    }
 }
