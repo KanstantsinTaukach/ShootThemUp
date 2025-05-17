@@ -69,7 +69,7 @@ class SHOOTTHEMUP_API USTUHealthComponent : public UActorComponent
     FTimerHandle HealTimerHandle;
 
     UFUNCTION()
-    void OnTakeAnyDamageHandle(
+    void OnTakeAnyDamage(
         AActor *DamagedActor, 
         float Damage, 
         const class UDamageType *DamageType,
@@ -77,7 +77,7 @@ class SHOOTTHEMUP_API USTUHealthComponent : public UActorComponent
         AActor *DamageCauser);
 
     UFUNCTION()
-    void OnTakePointDamageHandle(
+    void OnTakePointDamage(
         AActor* DamagedActor,
         float Damage,
         class AController* InstigatedBy,
@@ -89,7 +89,7 @@ class SHOOTTHEMUP_API USTUHealthComponent : public UActorComponent
         AActor* DamageCauser);
 
     UFUNCTION()
-    void OnTakeRadialDamageHandle(
+    void OnTakeRadialDamage(
         AActor* DamagedActor,
         float Damage,
         const class UDamageType* DamageType,
@@ -109,4 +109,6 @@ class SHOOTTHEMUP_API USTUHealthComponent : public UActorComponent
     void ApplyDamage(float Damage, AController *InstigatedBy);
 
     float GetPointDamageModifier(AActor *DamagedActor, const FName &BoneName);
+
+    void ReportDamageEvent(float Damage, AController *InstigatedBy);
 };

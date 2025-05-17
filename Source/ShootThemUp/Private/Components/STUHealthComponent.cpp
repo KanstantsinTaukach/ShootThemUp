@@ -8,6 +8,7 @@
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include "STUGameModeBase.h"
 #include "TimerManager.h"
+#include "Perception/AISense_Damage.h"
 
 DEFINE_LOG_CATEGORY_STATIC(HealthComponentLog, All, All);
 
@@ -27,19 +28,19 @@ void USTUHealthComponent::BeginPlay()
     AActor *ComponentOwner = GetOwner();
     if (ComponentOwner)
     {
-        ComponentOwner->OnTakeAnyDamage.AddDynamic(this, &USTUHealthComponent::OnTakeAnyDamageHandle);
-        ComponentOwner->OnTakePointDamage.AddDynamic(this, &USTUHealthComponent::OnTakePointDamageHandle);
-        ComponentOwner->OnTakeRadialDamage.AddDynamic(this, &USTUHealthComponent::OnTakeRadialDamageHandle);
+        ComponentOwner->OnTakeAnyDamage.AddDynamic(this, &USTUHealthComponent::OnTakeAnyDamage);
+        ComponentOwner->OnTakePointDamage.AddDynamic(this, &USTUHealthComponent::OnTakePointDamage);
+        ComponentOwner->OnTakeRadialDamage.AddDynamic(this, &USTUHealthComponent::OnTakeRadialDamage);
     }
 }
 
-void USTUHealthComponent::OnTakeAnyDamageHandle(AActor *DamagedActor, float Damage, const UDamageType *DamageType,
+void USTUHealthComponent::OnTakeAnyDamage(AActor *DamagedActor, float Damage, const UDamageType *DamageType,
                                                 AController *InstigatedBy, AActor *DamageCauser)
 {
     UE_LOG(HealthComponentLog, Display, TEXT("On any damage: %f"), Damage);
 }
 
-void USTUHealthComponent::OnTakePointDamageHandle(AActor *DamagedActor, float Damage, AController *InstigatedBy,
+void USTUHealthComponent::OnTakePointDamage(AActor *DamagedActor, float Damage, AController *InstigatedBy,
                                                   FVector HitLocation, UPrimitiveComponent *FHitComponent,
                                                   FName BoneName, FVector ShotFromDirection,
                                                   const UDamageType *DamageType, AActor *DamageCauser)
@@ -49,7 +50,7 @@ void USTUHealthComponent::OnTakePointDamageHandle(AActor *DamagedActor, float Da
     ApplyDamage(FinalDamage, InstigatedBy);
 }
 
-void USTUHealthComponent::OnTakeRadialDamageHandle(AActor *DamagedActor, float Damage, const UDamageType *DamageType,
+void USTUHealthComponent::OnTakeRadialDamage(AActor *DamagedActor, float Damage, const UDamageType *DamageType,
                                                    FVector Origin, FHitResult HitInfo, AController *InstigatedBy,
                                                    AActor *DamageCauser)
 {
@@ -79,6 +80,7 @@ void USTUHealthComponent::ApplyDamage(float Damage, AController *InstigatedBy)
     }
 
     PlayCameraShake();
+    ReportDamageEvent(Damage, InstigatedBy);
 }
 
 void USTUHealthComponent::HealUpdate()
@@ -162,4 +164,17 @@ float USTUHealthComponent::GetPointDamageModifier(AActor *DamagedActor, const FN
     if (!PhysMaterial || !DamageModifiers.Contains(PhysMaterial)) return 1.0f;
 
     return DamageModifiers[PhysMaterial];
+}
+
+void USTUHealthComponent::ReportDamageEvent(float Damage, AController *InstigatedBy)
+{
+    if (!InstigatedBy || !InstigatedBy->GetPawn() || !GetOwner()) return;
+
+    UAISense_Damage::ReportDamageEvent(
+        GetWorld(), 
+        GetOwner(), 
+        InstigatedBy->GetPawn(), 
+        Damage, 
+        InstigatedBy->GetPawn()->GetActorLocation(), 
+        GetOwner()->GetActorLocation());
 }

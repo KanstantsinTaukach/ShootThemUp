@@ -85,14 +85,11 @@ void ASTUBaseCharacter::OnGroundLanded(const FHitResult &Hit)
     const auto FallVelocityZ = -GetVelocity().Z;
     UE_LOG(BaseCharacterLog, Display, TEXT("On landed: %f"), FallVelocityZ);
 
-    if (FallVelocityZ < LandedDamageVelocity.X)
-    {
-        return;
-    }
+    if (FallVelocityZ < LandedDamageVelocity.X) return;
 
     const auto FinalDamage = FMath::GetMappedRangeValueClamped(LandedDamageVelocity, LandedDamage, FallVelocityZ);
     UE_LOG(BaseCharacterLog, Display, TEXT("FinalDamage: %f"), FinalDamage);
-    TakeDamage(FinalDamage, FDamageEvent{}, nullptr, nullptr);
+    TakeDamage(FinalDamage, FPointDamageEvent{}, nullptr, nullptr);
 }
 
 void ASTUBaseCharacter::SetPlayerColor(const FLinearColor &Color)
