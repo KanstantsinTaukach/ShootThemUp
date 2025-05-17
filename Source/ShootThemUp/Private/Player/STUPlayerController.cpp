@@ -16,15 +16,14 @@ void ASTUPlayerController::BeginPlay()
 
     if (GetWorld())
     {
-        const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
-        if (GameMode)
+        if (const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode()))
         {
             GameMode->OnMatchStateChange.AddUObject(this, &ASTUPlayerController::OnMatchStateChanged);
         }
     }
 }
 
-void ASTUPlayerController::OnPossess(APawn *InPawn)
+void ASTUPlayerController::OnPossess(APawn* InPawn)
 {
     Super::OnPossess(InPawn);
 

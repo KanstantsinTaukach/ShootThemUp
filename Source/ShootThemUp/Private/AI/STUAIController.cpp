@@ -1,6 +1,5 @@
 // Shoot them Up Game. All Rights Reserved.
 
-
 #include "AI/STUAIController.h"
 #include "AI/STUAICharacter.h"
 #include "Components/STUAIPerceptionComponent.h"
@@ -20,27 +19,22 @@ ASTUAIController::ASTUAIController()
 void ASTUAIController::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
-    const auto AimActor = GetFocusOnActor();
-    SetFocus(AimActor);
+    SetFocus(GetFocusOnActor());
 }
 
-void ASTUAIController::OnPossess(APawn *InPawn)
+void ASTUAIController::OnPossess(APawn* InPawn)
 {
     Super::OnPossess(InPawn);
 
-    const auto STUCharacter = Cast<ASTUAICharacter>(InPawn);
-    if (STUCharacter)
+    if (const auto STUCharacter = Cast<ASTUAICharacter>(InPawn))
     {
         RunBehaviorTree(STUCharacter->BehaviorTreeAsset);
     }
 }
 
-AActor *ASTUAIController::GetFocusOnActor() const
+AActor* ASTUAIController::GetFocusOnActor() const
 {
-    if (!GetBlackboardComponent())
-    {
-        return nullptr;
-    }
+    if (!GetBlackboardComponent()) return nullptr;
 
     return Cast<AActor>(GetBlackboardComponent()->GetValueAsObject(FocusOnKeyName));
 }

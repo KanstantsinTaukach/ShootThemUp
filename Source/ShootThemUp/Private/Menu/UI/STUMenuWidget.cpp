@@ -60,7 +60,7 @@ void USTUMenuWidget::InitLevelItems()
     }
 }
 
-void USTUMenuWidget::OnLevelSelected(const FLevelData &Data)
+void USTUMenuWidget::OnLevelSelected(const FLevelData& Data)
 {
     const auto STUGameInstance = GetSTUGameInstance();
     if (!STUGameInstance) return;
@@ -84,7 +84,7 @@ void USTUMenuWidget::OnStartGame()
     UGameplayStatics::PlaySound2D(GetWorld(), StartGameSound);
 }
 
-void USTUMenuWidget::OnAnimationFinished_Implementation(const UWidgetAnimation *Animation)
+void USTUMenuWidget::OnAnimationFinished_Implementation(const UWidgetAnimation* Animation)
 {
     if (Animation != HideAnimation) return;
 
@@ -99,9 +99,9 @@ void USTUMenuWidget::OnQuitGame()
     UKismetSystemLibrary::QuitGame(this, GetOwningPlayer(), EQuitPreference::Quit, true);
 }
 
-USTUGameInstance *USTUMenuWidget::GetSTUGameInstance() const
+USTUGameInstance* USTUMenuWidget::GetSTUGameInstance() const
 {
-    if(!GetWorld()) return nullptr;
+    if (!GetWorld()) return nullptr;
 
     return GetWorld()->GetGameInstance<USTUGameInstance>();
 }

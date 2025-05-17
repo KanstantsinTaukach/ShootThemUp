@@ -39,11 +39,11 @@ void ASTUProjectile::BeginPlay()
     SetLifeSpan(LifeSeconds);
 }
 
-void ASTUProjectile::OnProjectileHit(UPrimitiveComponent *HitComponent, //
-                                     AActor *OtherActor,                //
-                                     UPrimitiveComponent *OtherComp,    //
-                                     FVector NormalImpulse,             //
-                                     const FHitResult &Hit)             //
+void ASTUProjectile::OnProjectileHit(UPrimitiveComponent* HitComponent,  //
+    AActor* OtherActor,                                                  //
+    UPrimitiveComponent* OtherComp,                                      //
+    FVector NormalImpulse,                                               //
+    const FHitResult& Hit)                                               //
 {
     if (!GetWorld())
     {
@@ -52,24 +52,22 @@ void ASTUProjectile::OnProjectileHit(UPrimitiveComponent *HitComponent, //
 
     MovementComponent->StopMovementImmediately();
 
-    UGameplayStatics::ApplyRadialDamage(GetWorld(),                 //
-                                        DamageAmount,               //
-                                        GetActorLocation(),         //
-                                        DamageRadius,               //
-                                        UDamageType::StaticClass(), //
-                                        {GetOwner()},               //
-                                        this,                       //
-                                        GetController(),            //
-                                        DoFullDamage);              //
-
-    //DrawDebugSphere(GetWorld(), GetActorLocation(), DamageRadius, 24, FColor::Blue, false, 5.0f);
+    UGameplayStatics::ApplyRadialDamage(GetWorld(),  //
+        DamageAmount,                                //
+        GetActorLocation(),                          //
+        DamageRadius,                                //
+        UDamageType::StaticClass(),                  //
+        {GetOwner()},                                //
+        this,                                        //
+        GetController(),                             //
+        DoFullDamage);                               //
 
     WeaponFXComponent->PlayImpactFX(Hit);
 
     Destroy();
 }
 
-AController *ASTUProjectile::GetController() const
+AController* ASTUProjectile::GetController() const
 {
     const auto Pawn = Cast<APawn>(GetOwner());
     return Pawn ? Pawn->GetController() : nullptr;

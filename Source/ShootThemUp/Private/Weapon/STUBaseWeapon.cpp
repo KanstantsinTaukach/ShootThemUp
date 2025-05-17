@@ -35,7 +35,7 @@ void ASTUBaseWeapon::StopFire() {}
 
 void ASTUBaseWeapon::MakeShot() {}
 
-bool ASTUBaseWeapon::GetPlayerViewPoint(FVector &ViewLocation, FRotator &ViewRotation) const
+bool ASTUBaseWeapon::GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const
 {
     const auto STUCharacter = Cast<ACharacter>(GetOwner());
     if (!STUCharacter) return false;
@@ -52,7 +52,7 @@ bool ASTUBaseWeapon::GetPlayerViewPoint(FVector &ViewLocation, FRotator &ViewRot
         ViewLocation = GetMuzzleWorldLocation();
         ViewRotation = WeaponSkeletalMesh->GetSocketRotation(MuzzleSocketName);
     }
-    
+
     return true;
 }
 
@@ -61,7 +61,7 @@ FVector ASTUBaseWeapon::GetMuzzleWorldLocation() const
     return WeaponSkeletalMesh->GetSocketLocation(MuzzleSocketName);
 }
 
-bool ASTUBaseWeapon::GetTraceData(FVector &TraceStart, FVector &TraceEnd) const
+bool ASTUBaseWeapon::GetTraceData(FVector& TraceStart, FVector& TraceEnd) const
 {
     FVector ViewLocation;
     FRotator ViewRotation;
@@ -73,7 +73,7 @@ bool ASTUBaseWeapon::GetTraceData(FVector &TraceStart, FVector &TraceEnd) const
     return true;
 }
 
-void ASTUBaseWeapon::CheckHit(FHitResult &HitResult, const FVector &TraceStart, const FVector &TraceEnd) const
+void ASTUBaseWeapon::CheckHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const
 {
     if (!GetWorld()) return;
 
@@ -81,8 +81,7 @@ void ASTUBaseWeapon::CheckHit(FHitResult &HitResult, const FVector &TraceStart, 
     CollisionParams.AddIgnoredActor(GetOwner());
     CollisionParams.bReturnPhysicalMaterial = true;
 
-    GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility,
-                                         CollisionParams);
+    GetWorld()->LineTraceSingleByChannel(HitResult, TraceStart, TraceEnd, ECollisionChannel::ECC_Visibility, CollisionParams);
 }
 
 void ASTUBaseWeapon::DecreaseAmmo()
@@ -181,13 +180,13 @@ bool ASTUBaseWeapon::TryToAddAmmo(int32 ClipsAmount)
     return true;
 }
 
-UNiagaraComponent *ASTUBaseWeapon::SpawnMuzzleFX()
+UNiagaraComponent* ASTUBaseWeapon::SpawnMuzzleFX()
 {
-    return UNiagaraFunctionLibrary::SpawnSystemAttached(MuzzleFX,                      //
-                                                        WeaponSkeletalMesh,            //
-                                                        MuzzleSocketName,              //
-                                                        FVector::ZeroVector,           //
-                                                        FRotator::ZeroRotator,         //
-                                                        EAttachLocation::SnapToTarget, //
-                                                        true);
+    return UNiagaraFunctionLibrary::SpawnSystemAttached(MuzzleFX,  //
+        WeaponSkeletalMesh,                                        //
+        MuzzleSocketName,                                          //
+        FVector::ZeroVector,                                       //
+        FRotator::ZeroRotator,                                     //
+        EAttachLocation::SnapToTarget,                             //
+        true);
 }

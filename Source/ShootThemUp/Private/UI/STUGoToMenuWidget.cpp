@@ -1,6 +1,5 @@
 // Shoot them Up Game. All Rights Reserved.
 
-
 #include "UI/STUGoToMenuWidget.h"
 #include "Components/Button.h"
 #include "Kismet/GameplayStatics.h"

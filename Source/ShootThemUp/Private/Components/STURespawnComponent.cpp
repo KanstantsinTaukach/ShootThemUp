@@ -5,14 +5,14 @@
 
 USTURespawnComponent::USTURespawnComponent()
 {
-	PrimaryComponentTick.bCanEverTick = false;
+    PrimaryComponentTick.bCanEverTick = false;
 }
 
 void USTURespawnComponent::Respawn(int32 RespawnTime)
 {
     if (!GetWorld()) return;
 
-	RespawnCountDown = RespawnTime;
+    RespawnCountDown = RespawnTime;
     GetWorld()->GetTimerManager().SetTimer(RespawnTimerHandle, this, &USTURespawnComponent::RespawnTimerUpdate, 1.0f, true);
 }
 

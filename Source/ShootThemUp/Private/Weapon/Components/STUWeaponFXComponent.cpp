@@ -12,7 +12,7 @@ USTUWeaponFXComponent::USTUWeaponFXComponent()
     PrimaryComponentTick.bCanEverTick = false;
 }
 
-void USTUWeaponFXComponent::PlayImpactFX(const FHitResult &Hit)
+void USTUWeaponFXComponent::PlayImpactFX(const FHitResult& Hit)
 {
     auto ImpactData = DefaultImpactData;
 
@@ -26,17 +26,17 @@ void USTUWeaponFXComponent::PlayImpactFX(const FHitResult &Hit)
     }
 
     // niagara
-    UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(),               //
-                                                   ImpactData.NiagaraEffect, //
-                                                   Hit.ImpactPoint,          //
-                                                   Hit.ImpactNormal.Rotation());
+    UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(),  //
+        ImpactData.NiagaraEffect,                               //
+        Hit.ImpactPoint,                                        //
+        Hit.ImpactNormal.Rotation());
 
     // decal
-    auto DecalComponent = UGameplayStatics::SpawnDecalAtLocation(GetWorld(),                    //
-                                                                 ImpactData.DecalData.Material, //
-                                                                 ImpactData.DecalData.Size,     //
-                                                                 Hit.ImpactPoint,               //
-                                                                 Hit.ImpactNormal.Rotation());
+    auto DecalComponent = UGameplayStatics::SpawnDecalAtLocation(GetWorld(),  //
+        ImpactData.DecalData.Material,                                        //
+        ImpactData.DecalData.Size,                                            //
+        Hit.ImpactPoint,                                                      //
+        Hit.ImpactNormal.Rotation());
     if (DecalComponent)
     {
         DecalComponent->SetFadeOut(ImpactData.DecalData.LifeTime, ImpactData.DecalData.FadeOutTime);

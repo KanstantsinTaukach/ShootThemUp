@@ -5,16 +5,16 @@
 #include "Pickups/STUAmmoPickup.h"
 #include "Weapon/STUBaseWeapon.h"
 
-UEnvQueryTest_AmmoCouldBeTaken::UEnvQueryTest_AmmoCouldBeTaken(const FObjectInitializer &ObjectInitializer) : Super(ObjectInitializer)
+UEnvQueryTest_AmmoCouldBeTaken::UEnvQueryTest_AmmoCouldBeTaken(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
     Cost = EEnvTestCost::Low;
     ValidItemType = UEnvQueryItemType_ActorBase::StaticClass();
     SetWorkOnFloatValues(false);
 }
 
-void UEnvQueryTest_AmmoCouldBeTaken::RunTest(FEnvQueryInstance &QueryInstance) const
+void UEnvQueryTest_AmmoCouldBeTaken::RunTest(FEnvQueryInstance& QueryInstance) const
 {
-    UObject *DataOwner = QueryInstance.Owner.Get();
+    UObject* DataOwner = QueryInstance.Owner.Get();
     BoolValue.BindData(DataOwner, QueryInstance.QueryID);
     bool WantsBeTakable = BoolValue.GetValue();
 
@@ -22,10 +22,7 @@ void UEnvQueryTest_AmmoCouldBeTaken::RunTest(FEnvQueryInstance &QueryInstance) c
     {
         const auto ItemActor = GetItemActor(QueryInstance, It.GetIndex());
         const auto PickupActor = Cast<ASTUAmmoPickup>(ItemActor);
-        if (!PickupActor || PickupActor->GetWeaponType() != WeaponType)
-        {
-            continue;
-        }
+        if (!PickupActor || PickupActor->GetWeaponType() != WeaponType) continue;
 
         const auto CouldBeTaken = PickupActor->CouldBeTaken();
         It.SetScore(TestPurpose, FilterType, CouldBeTaken, WantsBeTakable);

@@ -7,9 +7,9 @@
 #include "Perception/AISense_Sight.h"
 #include "Perception/AISense_Damage.h"
 
-AActor *USTUAIPerceptionComponent::GetClosestEnemy() const
+AActor* USTUAIPerceptionComponent::GetClosestEnemy() const
 {
-    TArray<AActor *> PercieveActors;
+    TArray<AActor*> PercieveActors;
     GetCurrentlyPerceivedActors(UAISense_Sight::StaticClass(), PercieveActors);
     if (PercieveActors.Num() == 0)
     {
@@ -24,7 +24,7 @@ AActor *USTUAIPerceptionComponent::GetClosestEnemy() const
     if (!Pawn) return nullptr;
 
     float BestDistance = MAX_FLT;
-    AActor *BestPawn = nullptr;
+    AActor* BestPawn = nullptr;
     for (const auto PercieveActor : PercieveActors)
     {
         const auto HealthComponent = STUUtils::GetSTUPlayerComponent<USTUHealthComponent>(PercieveActor);

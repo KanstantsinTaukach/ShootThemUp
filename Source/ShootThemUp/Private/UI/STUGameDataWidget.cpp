@@ -22,12 +22,12 @@ int32 USTUGameDataWidget::GetRoundSecondsRemaining() const
     return GameMode ? GameMode->GetRoundSecondsRemaining() : 0;
 }
 
-ASTUGameModeBase *USTUGameDataWidget::GetSTUGameMode() const
+ASTUGameModeBase* USTUGameDataWidget::GetSTUGameMode() const
 {
     return GetWorld() ? Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode()) : nullptr;
 }
 
-ASTUPlayerState *USTUGameDataWidget::GetSTUPlayerState() const
+ASTUPlayerState* USTUGameDataWidget::GetSTUPlayerState() const
 {
     return GetOwningPlayer() ? Cast<ASTUPlayerState>(GetOwningPlayer()->PlayerState) : nullptr;
 }

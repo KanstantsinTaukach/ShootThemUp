@@ -43,7 +43,7 @@ void ASTUBasePickup::Tick(float DeltaTime)
     }
 }
 
-void ASTUBasePickup::NotifyActorBeginOverlap(AActor *OtherActor)
+void ASTUBasePickup::NotifyActorBeginOverlap(AActor* OtherActor)
 {
     Super::NotifyActorBeginOverlap(OtherActor);
 
@@ -58,7 +58,7 @@ void ASTUBasePickup::NotifyActorBeginOverlap(AActor *OtherActor)
     }
 }
 
-void ASTUBasePickup::NotifyActorEndOverlap(AActor *OtherActor)
+void ASTUBasePickup::NotifyActorEndOverlap(AActor* OtherActor)
 {
     Super::NotifyActorEndOverlap(OtherActor);
 
@@ -66,7 +66,7 @@ void ASTUBasePickup::NotifyActorEndOverlap(AActor *OtherActor)
     OverlappingPawns.Remove(Pawn);
 }
 
-bool ASTUBasePickup::GivePickupTo(APawn *PlayerPawn)
+bool ASTUBasePickup::GivePickupTo(APawn* PlayerPawn)
 {
     return false;
 }

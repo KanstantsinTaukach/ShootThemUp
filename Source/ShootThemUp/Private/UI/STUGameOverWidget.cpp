@@ -38,7 +38,7 @@ void USTUGameOverWidget::OnMatchStateChanged(ESTUMatchState State)
 
 void USTUGameOverWidget::UpdatePlayerStat()
 {
-    if (!GetWorld() || !PlayerStatBox) return; 
+    if (!GetWorld() || !PlayerStatBox) return;
 
     PlayerStatBox->ClearChildren();
 

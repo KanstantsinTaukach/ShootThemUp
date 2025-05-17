@@ -10,8 +10,6 @@ DEFINE_LOG_CATEGORY_STATIC(LogSTUGameHUD, All, All);
 void ASTUGameHUD::DrawHUD()
 {
     Super::DrawHUD();
-
-    //DrawCrossHair();
 }
 
 void ASTUGameHUD::BeginPlay()
@@ -33,8 +31,7 @@ void ASTUGameHUD::BeginPlay()
 
     if (GetWorld())
     {
-        const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode());
-        if (GameMode)
+        if (const auto GameMode = Cast<ASTUGameModeBase>(GetWorld()->GetAuthGameMode()))
         {
             GameMode->OnMatchStateChange.AddUObject(this, &ASTUGameHUD::OnMatchStateChanged);
         }

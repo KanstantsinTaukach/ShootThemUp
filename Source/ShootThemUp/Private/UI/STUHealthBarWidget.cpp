@@ -7,9 +7,8 @@ void USTUHealthBarWidget::SetHealthPercent(float Percent)
 {
     if (!HealthProgressBar) return;
 
-    const auto HealthBarVisibility = (Percent > PercentVisibiltityThreshold || FMath::IsNearlyZero(Percent))
-                                         ? ESlateVisibility::Hidden
-                                         : ESlateVisibility::Visible;
+    const auto HealthBarVisibility =
+        (Percent > PercentVisibiltityThreshold || FMath::IsNearlyZero(Percent)) ? ESlateVisibility::Hidden : ESlateVisibility::Visible;
     HealthProgressBar->SetVisibility(HealthBarVisibility);
 
     const auto HealthBarColor = Percent > PercentColorThreshold ? GoodColor : BadColor;

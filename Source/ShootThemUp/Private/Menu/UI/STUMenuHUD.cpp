@@ -9,8 +9,7 @@ void ASTUMenuHUD::BeginPlay()
 
     if (MenuWidgetClass)
     {
-        const auto MenuWidget = CreateWidget<USTUBaseWidget>(GetWorld(), MenuWidgetClass);
-        if (MenuWidget)
+        if (const auto MenuWidget = CreateWidget<USTUBaseWidget>(GetWorld(), MenuWidgetClass))
         {
             MenuWidget->AddToViewport();
             MenuWidget->Show();

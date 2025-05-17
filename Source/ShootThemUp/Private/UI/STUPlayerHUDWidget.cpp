@@ -18,7 +18,7 @@ void USTUPlayerHUDWidget::NativeOnInitialized()
     }
 }
 
-void USTUPlayerHUDWidget::OnNewPawn(APawn *NewPawn)
+void USTUPlayerHUDWidget::OnNewPawn(APawn* NewPawn)
 {
     const auto HealthComponent = STUUtils::GetSTUPlayerComponent<USTUHealthComponent>(NewPawn);
     if (HealthComponent && !HealthComponent->OnHealthChanged.IsBoundToObject(this))
@@ -45,32 +45,23 @@ void USTUPlayerHUDWidget::OnHealthChanged(float Health, float HealthDelta)
 float USTUPlayerHUDWidget::GetHealthPercent() const
 {
     const auto HealthComponent = STUUtils::GetSTUPlayerComponent<USTUHealthComponent>(GetOwningPlayerPawn());
-    if (!HealthComponent)
-    {
-        return 0.0f;
-    }
+    if (!HealthComponent) return 0.0f;
 
     return HealthComponent->GetHealthPercent();
 }
 
-bool USTUPlayerHUDWidget::GetCurrentWeaponUIData(FWeaponUIData &UIData) const
+bool USTUPlayerHUDWidget::GetCurrentWeaponUIData(FWeaponUIData& UIData) const
 {
     const auto WeaponComponent = STUUtils::GetSTUPlayerComponent<USTUWeaponComponent>(GetOwningPlayerPawn());
-    if (!WeaponComponent)
-    {
-        return false;
-    }
+    if (!WeaponComponent) return false;
 
     return WeaponComponent->GetCurrentWeaponUIData(UIData);
 }
 
-bool USTUPlayerHUDWidget::GetCurrentWeaponAmmoData(FAmmoData &AmmoData) const
+bool USTUPlayerHUDWidget::GetCurrentWeaponAmmoData(FAmmoData& AmmoData) const
 {
     const auto WeaponComponent = STUUtils::GetSTUPlayerComponent<USTUWeaponComponent>(GetOwningPlayerPawn());
-    if (!WeaponComponent)
-    {
-        return false;
-    }
+    if (!WeaponComponent) return false;
 
     return WeaponComponent->GetCurrentWeaponAmmoData(AmmoData);
 }

@@ -30,7 +30,7 @@ void ASTULauncherWeapon::MakeShot()
     const FVector Direction = (EndPoint - GetMuzzleWorldLocation()).GetSafeNormal();
 
     const FTransform SpawnTransform(FRotator::ZeroRotator, GetMuzzleWorldLocation());
-    ASTUProjectile *Projectile = GetWorld()->SpawnActorDeferred<ASTUProjectile>(ProjectileClass, SpawnTransform);
+    ASTUProjectile* Projectile = GetWorld()->SpawnActorDeferred<ASTUProjectile>(ProjectileClass, SpawnTransform);
     if (Projectile)
     {
         Projectile->SetShotDirection(Direction);

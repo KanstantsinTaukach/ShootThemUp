@@ -9,7 +9,7 @@
 #include "UI/STUHealthBarWidget.h"
 #include "Components/STUHealthComponent.h"
 
-ASTUAICharacter::ASTUAICharacter(const FObjectInitializer &ObjInit)
+ASTUAICharacter::ASTUAICharacter(const FObjectInitializer& ObjInit)
     : Super(ObjInit.SetDefaultSubobjectClass<USTUAIWeaponComponent>("WeaponComponent"))
 {
     AutoPossessAI = EAutoPossessAI::Disabled;

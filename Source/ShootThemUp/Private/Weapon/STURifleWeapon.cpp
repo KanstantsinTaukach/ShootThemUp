@@ -23,7 +23,7 @@ void ASTURifleWeapon::BeginPlay()
 }
 
 void ASTURifleWeapon::StartFire()
-{
+{ 
     InitFX();
     GetWorldTimerManager().SetTimer(ShotTimerHandle, this, &ASTURifleWeapon::MakeShot, TimeBetweenShots, true);
     MakeShot();
@@ -69,14 +69,11 @@ void ASTURifleWeapon::MakeShot()
     DecreaseAmmo();
 }
 
-bool ASTURifleWeapon::GetTraceData(FVector &TraceStart, FVector &TraceEnd) const
+bool ASTURifleWeapon::GetTraceData(FVector& TraceStart, FVector& TraceEnd) const
 {
     FVector ViewLocation;
     FRotator ViewRotation;
-    if (!GetPlayerViewPoint(ViewLocation, ViewRotation))
-    {
-        return false;
-    }
+    if (!GetPlayerViewPoint(ViewLocation, ViewRotation)) return false;
 
     TraceStart = ViewLocation;
     const auto HalfRad = FMath::DegreesToRadians(BulletSpread);
@@ -85,13 +82,10 @@ bool ASTURifleWeapon::GetTraceData(FVector &TraceStart, FVector &TraceEnd) const
     return true;
 }
 
-void ASTURifleWeapon::MakeDamage(const FHitResult &HitResult)
+void ASTURifleWeapon::MakeDamage(const FHitResult& HitResult)
 {
     const auto DamagedActor = HitResult.GetActor();
-    if (!DamagedActor)
-    {
-        return;
-    }
+    if (!DamagedActor) return;
 
     FPointDamageEvent PointDamageEvent;
     PointDamageEvent.HitInfo = HitResult;
@@ -127,7 +121,7 @@ void ASTURifleWeapon::SetFXActive(bool IsActive)
     }
 }
 
-void ASTURifleWeapon::SpawnTraceFX(const FVector &TraceStart, const FVector &TraceEnd)
+void ASTURifleWeapon::SpawnTraceFX(const FVector& TraceStart, const FVector& TraceEnd)
 {
     const auto TraceFXComponent = UNiagaraFunctionLibrary::SpawnSystemAtLocation(GetWorld(), TraceFX, TraceStart);
     if (TraceFXComponent)

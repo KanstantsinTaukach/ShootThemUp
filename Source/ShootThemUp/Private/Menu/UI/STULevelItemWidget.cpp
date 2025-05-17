@@ -22,7 +22,7 @@ void USTULevelItemWidget::OnLevelItemClicked()
     OnLevelSelected.Broadcast(LevelData);
 }
 
-void USTULevelItemWidget::SetLevelData(const FLevelData &Data)
+void USTULevelItemWidget::SetLevelData(const FLevelData& Data)
 {
     LevelData = Data;
 
@@ -42,7 +42,7 @@ void USTULevelItemWidget::SetSelected(bool IsSelected)
     if (LevelImage)
     {
         LevelImage->SetColorAndOpacity(IsSelected ? FLinearColor::Red : FLinearColor::White);
-    }   
+    }
 }
 
 void USTULevelItemWidget::OnLevelItemHovered()

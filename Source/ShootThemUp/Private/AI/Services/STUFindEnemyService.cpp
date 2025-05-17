@@ -6,13 +6,12 @@
 #include "STUUtils.h"
 #include "Components/STUAIPerceptionComponent.h"
 
-
 USTUFindEnemyService::USTUFindEnemyService()
 {
     NodeName = "Find Enemy";
 }
 
-void USTUFindEnemyService::TickNode(UBehaviorTreeComponent &OwnerComp, uint8 *NodeMemory, float DeltaSeconds)
+void USTUFindEnemyService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory, float DeltaSeconds)
 {
     const auto Blackboard = OwnerComp.GetBlackboardComponent();
     if (Blackboard)

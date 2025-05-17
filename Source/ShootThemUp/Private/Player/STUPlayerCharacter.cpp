@@ -8,7 +8,7 @@
 #include "Components/SphereComponent.h"
 #include "Components/CapsuleComponent.h"
 
-ASTUPlayerCharacter::ASTUPlayerCharacter(const FObjectInitializer &ObjInit) : Super(ObjInit)
+ASTUPlayerCharacter::ASTUPlayerCharacter(const FObjectInitializer& ObjInit) : Super(ObjInit)
 {
     PrimaryActorTick.bCanEverTick = true;
 
@@ -24,6 +24,7 @@ ASTUPlayerCharacter::ASTUPlayerCharacter(const FObjectInitializer &ObjInit) : Su
     CameraCollisionComponent->SetupAttachment(CameraComponent);
     CameraCollisionComponent->SetSphereRadius(10.0f);
     CameraCollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);
+    CameraCollisionComponent->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 }
 
 void ASTUPlayerCharacter::BeginPlay()
@@ -36,7 +37,7 @@ void ASTUPlayerCharacter::BeginPlay()
     CameraCollisionComponent->OnComponentEndOverlap.AddDynamic(this, &ASTUPlayerCharacter::OnCameraCollisionEndOverlap);
 }
 
-void ASTUPlayerCharacter::SetupPlayerInputComponent(UInputComponent *PlayerInputComponent)
+void ASTUPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
     Super::SetupPlayerInputComponent(PlayerInputComponent);
     check(PlayerInputComponent);
@@ -67,6 +68,7 @@ void ASTUPlayerCharacter::MoveForward(float Amount)
 
 void ASTUPlayerCharacter::MoveRight(float Amount)
 {
+    if (Amount == 0.0f) return;
     AddMovementInput(GetActorRightVector(), Amount);
 }
 
@@ -96,15 +98,14 @@ void ASTUPlayerCharacter::OnDeath()
     }
 }
 
-void ASTUPlayerCharacter::OnCameraCollisionBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
-                                                        UPrimitiveComponent *OtherComp, int32 OtherBodyIndex,
-                                                        bool bFromSweep, const FHitResult &SweepResult)
+void ASTUPlayerCharacter::OnCameraCollisionBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
+    UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
     CheckCameraOverlap();
 }
 
-void ASTUPlayerCharacter::OnCameraCollisionEndOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
-                                                      UPrimitiveComponent *OtherComp, int32 OtherBodyIndex)
+void ASTUPlayerCharacter::OnCameraCollisionEndOverlap(
+    UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
     CheckCameraOverlap();
 }

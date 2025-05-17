@@ -4,17 +4,16 @@
 #include "EnvironmentQuery/Items/EnvQueryItemType_ActorBase.h"
 #include "Pickups/STUBasePickup.h"
 
-UEnvQueryTest_PickupCouldBeTaken::UEnvQueryTest_PickupCouldBeTaken(const FObjectInitializer &ObjectInitializer)
-    : Super(ObjectInitializer)
+UEnvQueryTest_PickupCouldBeTaken::UEnvQueryTest_PickupCouldBeTaken(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
     Cost = EEnvTestCost::Low;
     ValidItemType = UEnvQueryItemType_ActorBase::StaticClass();
     SetWorkOnFloatValues(false);
 }
 
-void UEnvQueryTest_PickupCouldBeTaken::RunTest(FEnvQueryInstance &QueryInstance) const
+void UEnvQueryTest_PickupCouldBeTaken::RunTest(FEnvQueryInstance& QueryInstance) const
 {
-    UObject *DataOwner = QueryInstance.Owner.Get();
+    UObject* DataOwner = QueryInstance.Owner.Get();
     BoolValue.BindData(DataOwner, QueryInstance.QueryID);
     bool WantsBeTakable = BoolValue.GetValue();
 
@@ -22,10 +21,7 @@ void UEnvQueryTest_PickupCouldBeTaken::RunTest(FEnvQueryInstance &QueryInstance)
     {
         const auto ItemActor = GetItemActor(QueryInstance, It.GetIndex());
         const auto PickupActor = Cast<ASTUBasePickup>(ItemActor);
-        if (!PickupActor)
-        {
-            continue;
-        }
+        if (!PickupActor) continue;
 
         const auto CouldBeTaken = PickupActor->CouldBeTaken();
         It.SetScore(TestPurpose, FilterType, CouldBeTaken, WantsBeTakable);

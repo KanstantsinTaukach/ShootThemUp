@@ -14,7 +14,7 @@ DEFINE_LOG_CATEGORY_STATIC(LogSTUGameModeBase, All, All);
 
 constexpr static int32 MinRoundTimeForRespawn = 10;
 
-ASTUGameModeBase::ASTUGameModeBase() 
+ASTUGameModeBase::ASTUGameModeBase()
 {
     DefaultPawnClass = ASTUBaseCharacter::StaticClass();
     PlayerControllerClass = ASTUPlayerController::StaticClass();
@@ -35,7 +35,7 @@ void ASTUGameModeBase::StartPlay()
     SetMatchState(ESTUMatchState::InProgress);
 }
 
-UClass *ASTUGameModeBase::GetDefaultPawnClassForController_Implementation(AController *InController)
+UClass* ASTUGameModeBase::GetDefaultPawnClassForController_Implementation(AController* InController)
 {
     if (InController && InController->IsA<AAIController>())
     {
@@ -75,8 +75,8 @@ void ASTUGameModeBase::GameTimerUpdate()
         if (CurrentRound + 1 <= GameData.RoundsNum)
         {
             ++CurrentRound;
-            StartRound();
             ResetPlayers();
+            StartRound();
         }
         else
         {
@@ -95,7 +95,7 @@ void ASTUGameModeBase::ResetPlayers()
     }
 }
 
-void ASTUGameModeBase::ResetOnePlayer(AController *Controller)
+void ASTUGameModeBase::ResetOnePlayer(AController* Controller)
 {
     if (Controller && Controller->GetPawn())
     {
@@ -134,11 +134,12 @@ FLinearColor ASTUGameModeBase::DetermineColorByTeamID(int32 TeamID) const
         return GameData.TeamColors[TeamID - 1];
     }
 
-    UE_LOG(LogSTUGameModeBase, Warning, TEXT("No color for team id: %i, set to default: %s"), TeamID, *GameData.DefaultTeamColor.ToString());
+    UE_LOG(
+        LogSTUGameModeBase, Warning, TEXT("No color for team id: %i, set to default: %s"), TeamID, *GameData.DefaultTeamColor.ToString());
     return GameData.DefaultTeamColor;
 }
 
-void ASTUGameModeBase::SetPlayerColor(AController *Controller)
+void ASTUGameModeBase::SetPlayerColor(AController* Controller)
 {
     if (!Controller) return;
 
@@ -151,7 +152,7 @@ void ASTUGameModeBase::SetPlayerColor(AController *Controller)
     Character->SetPlayerColor(PlayerState->GetTeamColor());
 }
 
-void ASTUGameModeBase::Killed(AController *KillerController, AController *VictimComtroller)
+void ASTUGameModeBase::Killed(AController* KillerController, AController* VictimComtroller)
 {
     const auto KillerPlayerState = KillerController ? Cast<ASTUPlayerState>(KillerController->PlayerState) : nullptr;
     const auto VictimPlayerState = VictimComtroller ? Cast<ASTUPlayerState>(VictimComtroller->PlayerState) : nullptr;
@@ -171,8 +172,7 @@ void ASTUGameModeBase::Killed(AController *KillerController, AController *Victim
 
 void ASTUGameModeBase::LogPlayerInfo()
 {
-    if (!GetWorld())
-        return;
+    if (!GetWorld()) return;
 
     for (auto It = GetWorld()->GetControllerIterator(); It; ++It)
     {
@@ -186,7 +186,7 @@ void ASTUGameModeBase::LogPlayerInfo()
     }
 }
 
-void ASTUGameModeBase::StartRespawn(AController *Controller)
+void ASTUGameModeBase::StartRespawn(AController* Controller)
 {
     bool RespawnAvailable = RoundCountDown > MinRoundTimeForRespawn + GameData.RespawnTime;
     if (!RespawnAvailable) return;
@@ -197,7 +197,7 @@ void ASTUGameModeBase::StartRespawn(AController *Controller)
     RespawnCompnent->Respawn(GameData.RespawnTime);
 }
 
-void ASTUGameModeBase::RespawnRequest(AController *Controller)
+void ASTUGameModeBase::RespawnRequest(AController* Controller)
 {
     ResetOnePlayer(Controller);
 }
@@ -227,7 +227,7 @@ void ASTUGameModeBase::SetMatchState(ESTUMatchState State)
     OnMatchStateChange.Broadcast(MatchState);
 }
 
-bool ASTUGameModeBase::SetPause(APlayerController *PC, FCanUnpause CanUnpauseDelegate)
+bool ASTUGameModeBase::SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate)
 {
     const bool PauseSet = Super::SetPause(PC, CanUnpauseDelegate);
 
