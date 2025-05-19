@@ -32,7 +32,7 @@ struct FWeaponData
     TSubclassOf<ASTUBaseWeapon> WeaponClass;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    UAnimMontage *ReloadAnimMontage;
+    UAnimMontage* ReloadAnimMontage = nullptr;
 };
 
 USTRUCT(BlueprintType)
@@ -41,10 +41,10 @@ struct FWeaponUIData
     GENERATED_USTRUCT_BODY()
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-    UTexture2D *MainIcon;
+    UTexture2D* MainIcon = nullptr;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "UI")
-    UTexture2D *CrossHairIcon;
+    UTexture2D* CrossHairIcon = nullptr;
 };
 
 // health
@@ -63,7 +63,7 @@ struct FDecalData
     GENERATED_USTRUCT_BODY()
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
-    UMaterialInterface *Material;
+    UMaterialInterface* Material = nullptr;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     FVector Size = FVector(10.0f);
@@ -81,13 +81,13 @@ struct FImpactData
     GENERATED_USTRUCT_BODY()
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
-    UNiagaraSystem *NiagaraEffect;
+    UNiagaraSystem* NiagaraEffect = nullptr;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
     FDecalData DecalData;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
-    USoundCue *ImpactSound;
+    USoundCue* ImpactSound = nullptr;
 };
 
 USTRUCT(BlueprintType)
@@ -102,7 +102,7 @@ struct FGameData
     int32 RoundsNum = 4;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "3", ClampMax = "600"))
-    int32 RoundTime = 10; // in seconds
+    int32 RoundTime = 10;  // in seconds
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
     FLinearColor DefaultTeamColor = FLinearColor::Red;
@@ -111,7 +111,7 @@ struct FGameData
     TArray<FLinearColor> TeamColors;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game", meta = (ClampMin = "1", ClampMax = "20"))
-    int32 RespawnTime = 5; // in seconds
+    int32 RespawnTime = 5;  // in seconds
 };
 
 UENUM(BlueprintType)
@@ -137,7 +137,7 @@ struct FLevelData
     FName LevelDisplayName = NAME_None;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Game")
-    UTexture2D *LevelThumb;
+    UTexture2D* LevelThumb = nullptr;
 };
 
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnLevelSelectedSignature, const FLevelData&);

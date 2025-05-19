@@ -20,7 +20,6 @@ class SHOOTTHEMUP_API ASTUPlayerCharacter : public ASTUBaseCharacter
 
     virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
 
-    UFUNCTION(BlueprintCallable, Category = "Movement")
     virtual bool IsRunning() const override;
 
   protected:

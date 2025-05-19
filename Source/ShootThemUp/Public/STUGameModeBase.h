@@ -70,4 +70,6 @@ class SHOOTTHEMUP_API ASTUGameModeBase : public AGameModeBase
     void GameOver();
 
     void SetMatchState(ESTUMatchState State);
+
+    void StopAllFire();
 };
