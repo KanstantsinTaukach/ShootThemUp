@@ -7,6 +7,8 @@
 
 void ASTULauncherWeapon::StartFire()
 {
+    Super::StartFire();
+    
     MakeShot();
 }
 
@@ -42,4 +44,6 @@ void ASTULauncherWeapon::MakeShot()
 
     SpawnMuzzleFX();
     UGameplayStatics::SpawnSoundAttached(FireSound, WeaponSkeletalMesh, MuzzleSocketName);
+
+    StopFire();
 }

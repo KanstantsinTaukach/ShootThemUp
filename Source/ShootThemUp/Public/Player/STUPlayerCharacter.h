@@ -15,28 +15,28 @@ class SHOOTTHEMUP_API ASTUPlayerCharacter : public ASTUBaseCharacter
 {
     GENERATED_BODY()
 
-  public:
-    ASTUPlayerCharacter(const FObjectInitializer &ObjInit);
+public:
+    ASTUPlayerCharacter(const FObjectInitializer& ObjInit);
 
-    virtual void SetupPlayerInputComponent(class UInputComponent *PlayerInputComponent) override;
+    virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
     virtual bool IsRunning() const override;
 
-  protected:
+protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    USpringArmComponent *SpringArmComponent;
+    USpringArmComponent* SpringArmComponent;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    UCameraComponent *CameraComponent;
+    UCameraComponent* CameraComponent;
 
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    USphereComponent *CameraCollisionComponent;
+    USphereComponent* CameraCollisionComponent;
 
     virtual void OnDeath() override;
 
     virtual void BeginPlay() override;
 
-  private:
+private:
     bool WantsToRun = false;
     bool IsMovingForward = false;
 
@@ -46,14 +46,15 @@ class SHOOTTHEMUP_API ASTUPlayerCharacter : public ASTUBaseCharacter
     void OnStartRunning();
     void OnStopRunning();
 
-    UFUNCTION()
-    void OnCameraCollisionBeginOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
-                                       UPrimitiveComponent *OtherComp, int32 OtherBodyIndex, bool bFromSweep,
-                                       const FHitResult &SweepResult);
+    void OnStartFire();
 
     UFUNCTION()
-    void OnCameraCollisionEndOverlap(UPrimitiveComponent *OverlappedComponent, AActor *OtherActor,
-                                     UPrimitiveComponent *OtherComp, int32 OtherBodyIndex);
+    void OnCameraCollisionBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp,
+        int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+    UFUNCTION()
+    void OnCameraCollisionEndOverlap(
+        UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 
     void CheckCameraOverlap();
 };

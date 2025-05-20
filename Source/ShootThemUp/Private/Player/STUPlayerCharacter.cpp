@@ -50,7 +50,7 @@ void ASTUPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
     PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ASTUPlayerCharacter::Jump);
     PlayerInputComponent->BindAction("Run", IE_Pressed, this, &ASTUPlayerCharacter::OnStartRunning);
     PlayerInputComponent->BindAction("Run", IE_Released, this, &ASTUPlayerCharacter::OnStopRunning);
-    PlayerInputComponent->BindAction("Fire", IE_Pressed, WeaponComponent, &USTUWeaponComponent::StartFire);
+    PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &ASTUPlayerCharacter::OnStartFire);
     PlayerInputComponent->BindAction("Fire", IE_Released, WeaponComponent, &USTUWeaponComponent::StopFire);
     PlayerInputComponent->BindAction("NextWeapon", IE_Pressed, WeaponComponent, &USTUWeaponComponent::NextWeapon);
     PlayerInputComponent->BindAction("Reload", IE_Pressed, WeaponComponent, &USTUWeaponComponent::Reload);
@@ -63,7 +63,13 @@ void ASTUPlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInput
 void ASTUPlayerCharacter::MoveForward(float Amount)
 {
     IsMovingForward = Amount > 0.0f;
+    if (Amount == 0.0f) return;
     AddMovementInput(GetActorForwardVector(), Amount);
+
+    if (IsRunning() && WeaponComponent->IsFiring())
+    {
+        WeaponComponent->StopFire();
+    }
 }
 
 void ASTUPlayerCharacter::MoveRight(float Amount)
@@ -81,6 +87,18 @@ void ASTUPlayerCharacter::OnStartRunning()
 void ASTUPlayerCharacter::OnStopRunning()
 {
     WantsToRun = false;
+    if (IsRunning())
+    {
+        WeaponComponent->StopFire();
+    }
+}
+
+void ASTUPlayerCharacter::OnStartFire() 
+{
+    if (IsRunning()) return;
+    {
+        WeaponComponent->StartFire();
+    }
 }
 
 bool ASTUPlayerCharacter::IsRunning() const

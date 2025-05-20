@@ -17,13 +17,14 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
 {
     GENERATED_BODY()
 
-  public:
+public:
     ASTUBaseWeapon();
 
     FOnClipEmptySignature OnClipEmpty;
 
     virtual void StartFire();
     virtual void StopFire();
+    bool IsFiring() const;
 
     void ChangeClip();
     bool CanReload() const;
@@ -38,9 +39,9 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
 
     virtual void Zoom(bool Enabled){};
 
-  protected:
+protected:
     UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
-    USkeletalMeshComponent *WeaponSkeletalMesh;
+    USkeletalMeshComponent* WeaponSkeletalMesh;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     FName MuzzleSocketName = "MuzzleFlashSocket";
@@ -55,30 +56,32 @@ class SHOOTTHEMUP_API ASTUBaseWeapon : public AActor
     FWeaponUIData UIData;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "VFX")
-    UNiagaraSystem *MuzzleFX;
+    UNiagaraSystem* MuzzleFX;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
-    USoundCue *FireSound;
+    USoundCue* FireSound;
+
+    bool FireInProgress = false;
 
     virtual void BeginPlay() override;
 
     virtual void MakeShot();
 
-    virtual bool GetTraceData(FVector &TraceStart, FVector &TraceEnd) const;
+    virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
 
-    bool GetPlayerViewPoint(FVector &ViewLocation, FRotator &ViewRotation) const;
+    bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
 
     FVector GetMuzzleWorldLocation() const;
 
-    void CheckHit(FHitResult &HitResult, const FVector &TraceStart, const FVector &TraceEnd) const;
+    void CheckHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd) const;
 
     void DecreaseAmmo();
     bool IsClipEmpty() const;
 
     void LogAmmo();
 
-    UNiagaraComponent *SpawnMuzzleFX();
+    UNiagaraComponent* SpawnMuzzleFX();
 
-  private:
+private:
     FAmmoData CurrentAmmo;
 };
