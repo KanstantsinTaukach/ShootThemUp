@@ -41,7 +41,8 @@ public class ShootThemUp : ModuleRules
             "ShootThemUp/Public/AI/Decorators",
             "ShootThemUp/Public/Menu",
             "ShootThemUp/Public/Menu/UI",
-            "ShootThemUp/Public/Sound"
+            "ShootThemUp/Public/Sound",
+			"ShootThemUp/Public/CV"
 
         });
 
